@@ -8,7 +8,7 @@ SECRET_PATH = Path(__file__).resolve().parent
 SECRET_FILE = SECRET_PATH / 'db.json'
 
 
-def pymongo_connect(host=None, port=27017):
+def mongodb_connect(host=None, port=27017):
 
     if host is not None:
         pass
