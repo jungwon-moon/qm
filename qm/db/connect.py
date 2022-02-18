@@ -21,9 +21,4 @@ def mongodb_connect(host=None, port=27017):
 
     db = MongoClient(host, port)
 
-    try:
-        db.list_database_names()
-        print(f'Connect DB [host: {host}:{port}]')
-    except:
-        print('ERROR: Check DB connection status')
     return db
