@@ -18,9 +18,13 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'}
 
 
-def fundamental_df(Dd):
+def fundamental_df(Dd=''):
     '''
     '''  # 펀더멘탈 excel로 스크래핑
+    if Dd == '':
+        Dd = utils.dt2str(now)[:8]
+        Dd = utils.check_trading_day(Dd)
+
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201'
     req_url = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd'
     params = {
@@ -46,10 +50,14 @@ def fundamental_df(Dd):
     return df
 
 
-def fundamental_json(Dd):
+def fundamental_json(Dd=''):
     '''
 
     '''
+    if Dd == '':
+        Dd = utils.dt2str(now)[:8]
+        Dd = utils.check_trading_day(Dd)
+
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201'
     req_url = 'http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd'
     params = {

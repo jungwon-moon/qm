@@ -2,6 +2,12 @@ from qm.scraping.website import web_krx
 import pandas as pd
 
 
+# # # # #
+def uncomma(str):
+    return str.replace(',', '')
+
+
+# # # # #
 def get_kospi(Type=''):
     data = web_krx.stock_index(indIdx='1', strtDd='20100101', Type=Type)
 
@@ -10,14 +16,15 @@ def get_kospi(Type=''):
     data.columns = ['date', 'open', 'high', 'low', 'close', 'volume', 'rate', 'amount']
     data = data[::-1].reset_index(drop=True)
     
-    def uncomma(str):
-        return str.replace(',', '')
     data = data.applymap(uncomma)
     
     return data
 
 
 def get_kosdaq(Type=''):
+    '''
+    Type: db
+    '''
     data =  web_krx.stock_index(indIdx='2', strtDd='20100101', Type=Type)
 
     data = pd.DataFrame(data)
@@ -25,13 +32,21 @@ def get_kosdaq(Type=''):
     data.columns = ['date', 'open', 'high', 'low', 'close', 'volume', 'rate', 'amount']
     data = data[::-1].reset_index(drop=True)
     
-    def uncomma(str):
-        return str.replace(',', '')
-    data = data.applymap(uncomma)
 
+    data = data.applymap(uncomma)
     return data
 
 
-def get_non_trading_days(yy=''):
+def get_non_trading_days(Type='', yy=''):
+    if Type == 'db':
+        return web_krx.non_trading_days_json()
+    else:
+        return web_krx.non_trading_days_json(yy)
 
-    return web_krx.non_trading_days_json(yy)
+
+def get_fundamental(Type='', Dd=''):
+    if Type == 'db':
+        return web_krx.fundamental_json()
+    else:
+        return web_krx.fundamental_json(Dd)
+    
