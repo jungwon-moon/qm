@@ -60,8 +60,11 @@ class POSTGRESCRUD(POSTGRES):
             result = ("Read DB Error", e)
         return result
 
-    def deleteDB(self, schema, table, condition):
-        query = f"DELETE from {schema}.{table} where {condition}"
+    def deleteDB(self, schema, table, condition=None):
+        if condition==None:
+            query = f"DELETE from {schema}.{table}"
+        else:
+            query = f"DELETE from {schema}.{table} where {condition}"
         try:
             self.cursor.execute(query)
             self.db.commit()
@@ -69,7 +72,11 @@ class POSTGRESCRUD(POSTGRES):
             print("Delete DB Error", e)
 
     def updateDB(self, schema, table, column, value, condition):
-        query = f"UPDATE from {schema}.{table} SET {column}='{value}' WHERE {column}='{condition}'"
+        '''
+        single-condition: "column='data'"
+        multi-condition: "column1='data1' and column2='data2'"
+        '''
+        query = f"UPDATE {schema}.{table} SET {column}='{value}' WHERE {condition}"
         try:
             self.cursor.execute(query)
             self.db.commit()

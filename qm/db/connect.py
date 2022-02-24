@@ -2,7 +2,7 @@ import os
 import sys
 import json
 from pathlib import Path
-from qm.db.db_class import POSTGRESCRUD
+from qm.db.DB import POSTGRESCRUD
 from pymongo import MongoClient
 import psycopg2
 
@@ -17,9 +17,3 @@ def mongodb_connect(properties):
 def postgres_connect(properties):
     db = POSTGRESCRUD(properties)
     return db
-    
-def rrr():
-    for key, value in secrets.items():
-        if key == "gcp":
-            db = postgres_connect(value)
-            return db
