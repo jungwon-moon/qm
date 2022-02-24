@@ -1,5 +1,4 @@
 import psycopg2
-# from psycopg2 import sql
 from psycopg2.extras import DictCursor
 
 
@@ -52,11 +51,11 @@ class POSTGRES():
 
 class POSTGRESCRUD(POSTGRES):
 
-    def insertDB(self, schema, table, column, data):
-        if type(data) is tuple:
-            query = f"INSERT INTO {schema}.{table}{column} VALUES {data}"
+    def insertDB(self, table, value, column=''):
+        if type(value) is tuple:
+            query = f"INSERT INTO {table}{column} VALUES {value}"
         else:
-            query = f"INSERT INTO {schema}.{table}{column} VALUES ({data})"
+            query = f"INSERT INTO {table}{column} VALUES ({value})"
 
         try:
             self.cursor.execute(query)
@@ -64,11 +63,11 @@ class POSTGRESCRUD(POSTGRES):
         except Exception as e:
             print("Insert DB Error", e)
 
-    def readDB(self, schema, table, column):
+    def readDB(self, table, column):
         '''
         column: str
         '''
-        query = f"SELECT {column} from {schema}.{table}"
+        query = f"SELECT {column} from {table}"
         try:
             self.cursor.execute(query)
             result = self.cursor.fetchall()
@@ -76,23 +75,23 @@ class POSTGRESCRUD(POSTGRES):
             result = ("Read DB Error", e)
         return result
 
-    def deleteDB(self, schema, table, condition=None):
+    def deleteDB(self, table, condition=None):
         if condition == None:
-            query = f"DELETE from {schema}.{table}"
+            query = f"DELETE from {table}"
         else:
-            query = f"DELETE from {schema}.{table} where {condition}"
+            query = f"DELETE from {table} where {condition}"
         try:
             self.cursor.execute(query)
             self.db.commit()
         except Exception as e:
             print("Delete DB Error", e)
 
-    def updateDB(self, schema, table, column, value, condition):
+    def updateDB(self, table, column, value, condition):
         '''
         single-condition: "column='data'"
         multi-condition: "column1='data1' and column2='data2'"
         '''
-        query = f"UPDATE {schema}.{table} SET {column}='{value}' WHERE {condition}"
+        query = f"UPDATE {table} SET {column}='{value}' WHERE {condition}"
         try:
             self.cursor.execute(query)
             self.db.commit()
