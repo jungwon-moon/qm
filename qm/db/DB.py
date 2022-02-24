@@ -3,6 +3,22 @@ import psycopg2
 from psycopg2.extras import DictCursor
 
 
+class DBINFO():
+
+    def __init__(self, param):
+        for key, value in param.items():
+            if key == 'host':
+                self.host = value
+            if key == 'dbname':
+                self.dbname = value
+            if key == 'user':
+                self.user = value
+            if key == 'password':
+                self.password = value
+            if key == 'port':
+                self.port = value
+
+
 class POSTGRES():
 
     def __init__(self, param):
@@ -61,7 +77,7 @@ class POSTGRESCRUD(POSTGRES):
         return result
 
     def deleteDB(self, schema, table, condition=None):
-        if condition==None:
+        if condition == None:
             query = f"DELETE from {schema}.{table}"
         else:
             query = f"DELETE from {schema}.{table} where {condition}"
