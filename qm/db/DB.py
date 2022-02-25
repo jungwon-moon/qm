@@ -103,12 +103,12 @@ class POSTGRESCRUD(POSTGRES):
         - action
             - NOTHING
             - UPDATE SET ({col1}, {col2}) = ({val1}, {val2})
-
         '''
+
         if type(value) is tuple:
-            query = f"INSERT INTO {table}{column} VALUES {value} ON CONFLICT {target} DO {action}"
+            query = f"INSERT INTO {table}{column} VALUES {value} ON CONFLICT ({target}) DO {action}"
         else:
-            query = f"INSERT INTO {table}{column} VALUES ({value}) ON CONFLICT {target} DO {action}"
+            query = f"INSERT INTO {table}{column} VALUES ({value}) ON CONFLICT ({target}) DO {action}"
 
         try:
             self.cursor.execute(query)
