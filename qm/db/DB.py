@@ -97,3 +97,21 @@ class POSTGRESCRUD(POSTGRES):
             self.db.commit()
         except Exception as e:
             print("Update DB Error", e)
+
+    def upsertDB(self, table, value, target, action='NOTHING', column=''):
+        '''
+        - action
+            - NOTHING
+            - UPDATE SET ({col1}, {col2}) = ({val1}, {val2})
+
+        '''
+        if type(value) is tuple:
+            query = f"INSERT INTO {table}{column} VALUES {value} ON CONFLICT {target} DO {action}"
+        else:
+            query = f"INSERT INTO {table}{column} VALUES ({value}) ON CONFLICT {target} DO {action}"
+
+        try:
+            self.cursor.execute(query)
+            self.db.commit()
+        except Exception as e:
+            print("Upsert DB Error", e)
