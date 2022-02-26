@@ -32,9 +32,13 @@ class POSTGRES():
                 self.password = value
             if key == 'port':
                 self.port = value
-        self.db = psycopg2.connect(
-            host=self.host, dbname=self.dbname, password=self.password, port=self.port)
-        self.cursor = self.db.cursor(cursor_factory=DictCursor)
+
+        try:
+            self.db = psycopg2.connect(
+                host=self.host, dbname=self.dbname, password=self.password, port=self.port)
+            self.cursor = self.db.cursor(cursor_factory=DictCursor)
+        except Exception as e:
+            print("DB connection error: ", e)
 
     def __del__(self):
         self.db.close()
