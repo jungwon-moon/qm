@@ -35,7 +35,7 @@ class POSTGRES():
 
         try:
             self.db = psycopg2.connect(
-                host=self.host, dbname=self.dbname, password=self.password, port=self.port)
+                host=self.host, dbname=self.dbname, password=self.password, port=self.port, user=self.user)
             self.cursor = self.db.cursor(cursor_factory=DictCursor)
         except Exception as e:
             print("DB connection error: ", e)
@@ -108,7 +108,6 @@ class POSTGRESCRUD(POSTGRES):
             - NOTHING
             - UPDATE SET ({col1}, {col2}) = ({val1}, {val2})
         '''
-
         if type(value) is tuple:
             query = f"INSERT INTO {table}{column} VALUES {value} ON CONFLICT ({target}) DO {action}"
         else:
