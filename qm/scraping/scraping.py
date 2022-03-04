@@ -37,16 +37,16 @@ def get_kosdaq(Type=''):
     return data
 
 
-def get_non_trading_days(Type='', yy=''):
+def get_holiday(Type='', yy=''):
     if Type == 'db':
-        return web_krx.non_trading_days_json()
+        return web_krx.holiday_json()
     else:
-        return web_krx.non_trading_days_json(yy)
+        return web_krx.holiday_json(yy)
 
 
-def get_fundamental(Type='', Dd=''):
+def get_fundamental1(Type='', Dd=''):
     if Type == 'db':
-        return web_krx.fundamental_json()
+        return web_krx.fundamentalv1_json()
     else:
-        return web_krx.fundamental_json(Dd)
+        return web_krx.fundamentalv1_json(Dd)
     

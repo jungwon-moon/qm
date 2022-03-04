@@ -18,7 +18,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'}
 
 
-def fundamental_df(Dd=''):
+def fundamentalv1_df(Dd=''):
     '''
     '''  # 펀더멘탈 excel로 스크래핑
     if Dd == '':
@@ -50,7 +50,7 @@ def fundamental_df(Dd=''):
     return df
 
 
-def fundamental_json(Dd=''):
+def fundamentalv1_json(Dd=''):
     '''
 
     '''
@@ -72,7 +72,7 @@ def fundamental_json(Dd=''):
     return result['output']
 
 
-def non_trading_days_json(yy=''):
+def holiday_json(yy=''):
     '''
     휴장일 데이터를 json으로 반환
     ----------
