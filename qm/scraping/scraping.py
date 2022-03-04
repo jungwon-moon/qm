@@ -44,7 +44,7 @@ def get_holiday(Type='', yy=''):
         return web_krx.holiday_json(yy)
 
 
-def get_fundamental1(Type='', Dd=''):
+def get_fundamentalv1(Type='', Dd=''):
     if Type == 'db':
         return web_krx.fundamentalv1_json()
     else:
