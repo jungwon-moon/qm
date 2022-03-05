@@ -32,10 +32,12 @@ def check_trading_day(Dd):
 
     # 휴장일 확인
     else:
-        req_url = 'http://quantmag.net/api/kr/holiday'
-        holiday = [row['calnd_dd'] for row in requests.get(req_url).json()]
+        try:
+            req_url = 'http://quantmag.net/api/kr/holiday'
+            holiday = [row['calnd_dd'] for row in requests.get(req_url).json()]
 
-        if Dd in holiday:
-            return check_trading_day(str2dt(Dd) - diff)    
-    
+            if Dd in holiday:
+                return check_trading_day(str2dt(Dd) - diff)    
+        except:
+            pass    
     return Dd
