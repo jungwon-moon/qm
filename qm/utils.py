@@ -1,4 +1,4 @@
-import qm
+import requests
 import datetime
 
 def dt2str(Dd, type='day'):
@@ -23,16 +23,19 @@ def check_trading_day(Dd):
     False: non trading day
     Dd: trading day
     '''
-    # db = qm.connect.pymongo_connect().qmdb
     Dd = dt2str(Dd)
     diff = datetime.timedelta(days=1)
-
-    # 과거 확인
-
+    
     # 주말 확인
     if datetime.date(int(Dd[:4]), int(Dd[4:6]), int(Dd[6:])).weekday() > 4:
-        return check_trading_day(str2dt(Dd) - diff)
-    
-    # 공휴일 확인
+        return check_trading_day(str2dt(Dd) - diff)    
+
+    # 휴장일 확인
+    else:
+        req_url = 'http://quantmag.net/api/kr/holiday'
+        holiday = [row['calnd_dd'] for row in requests.get(req_url).json()]
+
+        if Dd in holiday:
+            return check_trading_day(str2dt(Dd) - diff)    
     
     return Dd

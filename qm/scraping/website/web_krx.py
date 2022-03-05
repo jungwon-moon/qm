@@ -18,10 +18,10 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'}
 
 
-def fundamentalv1_df(Dd=''):
+def fundamentalv1_df(Dd=None):
     '''
     '''  # 펀더멘탈 excel로 스크래핑
-    if Dd == '':
+    if Dd == None:
         Dd = utils.dt2str(now)[:8]
         Dd = utils.check_trading_day(Dd)
 
@@ -50,13 +50,13 @@ def fundamentalv1_df(Dd=''):
     return df
 
 
-def fundamentalv1_json(Dd=''):
+def fundamentalv1_json(Dd=None):
     '''
 
     '''
-    if Dd == '':
+    if Dd == None:
         Dd = utils.dt2str(now)[:8]
-        Dd = utils.check_trading_day(Dd)
+    Dd = utils.check_trading_day(Dd)
 
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201'
     req_url = 'http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd'
@@ -72,16 +72,14 @@ def fundamentalv1_json(Dd=''):
     return result['output']
 
 
-def holiday_json(yy=''):
+def holiday_json(yy=None):
     '''
     휴장일 데이터를 json으로 반환
-    ----------
     yy: 해당연도
-    ----------
     Return
 
     '''
-    if yy == '':
+    if yy == None:
         yy = utils.dt2str(now)[:4]
 
     req_url = 'https://open.krx.co.kr/contents/OPN/99/OPN99000001.jspx'
@@ -99,7 +97,6 @@ def holiday_json(yy=''):
 def ipo(strtDd=ago_6mon, endDd=utils.dt2str(now)):
     '''
     ipo 관련통계 공시일전후 등락률
-    -----
     
     '''
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0202'
@@ -126,9 +123,11 @@ def ipo(strtDd=ago_6mon, endDd=utils.dt2str(now)):
 
 def stock_index(indIdx, Type, strtDd=ago_1mon, endDd=utils.check_trading_day(now)):
     '''
-    kospi 시세 추이
+    indIdx='1' : kospi
+    indIdx='2' : kosdaq
+    시세 추이
     '''
-    if Type == 'db':
+    if Type == None:
         strtDd = utils.check_trading_day(now)
 
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010103'
@@ -137,17 +136,34 @@ def stock_index(indIdx, Type, strtDd=ago_1mon, endDd=utils.check_trading_day(now
     params = {
         'bld': 'dbms/MDC/STAT/standard/MDCSTAT00301',
         'locale': 'ko_KR',
-        # 'tboxindIdx_finder_equidx0_0': '코스피',
         'indIdx': indIdx,
         'indIdx2': '001',
-        # 'codeNmindIdx_finder_equidx0_0': '코스피',
-        # 'param1indIdx_finder_equidx0_0': '',
         'strtDd': strtDd,
         'endDd': endDd,
         'share': '1',
         'money': '1',
         'csvxls_isNo': 'false',
     }
-
     r = requests.get(req_url, params=params, headers=headers)
     return r.json()['output']
+
+
+def all_stock_price(Dd=None):
+    if Dd == None:
+        Dd = utils.dt2str(now)[:8]
+    Dd = utils.check_trading_day(Dd)
+
+    headers['Origin'] = 'http://data.krx.co.kr'
+    headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201'
+    req_url = 'http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd'
+    params = {
+        'bld': 'dbms/MDC/STAT/standard/MDCSTAT01501',
+        'locale': 'ko_KR',
+        'mktId': 'ALL',
+        'trdDd': Dd,
+        'share': '1',
+        'money': '1',
+        'csvxls_isNo': 'false',
+    }
+    r = requests.get(req_url, params=params, headers=headers)
+    return r.json()['OutBlock_1']
