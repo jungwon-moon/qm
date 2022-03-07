@@ -67,6 +67,15 @@ class POSTGRESCRUD(POSTGRES):
         except Exception as e:
             print("Insert DB Error", e)
 
+    def multiInsertDB(self, table, values, columns=''):
+        try:
+            records_list_template = ','.join(['%s'] * len(values))
+            query = f'INSERT INTO {table}{columns} values {records_list_template}'
+            self.cursor.execute(query, values)
+            self.db.commit()
+        except Exception as e:
+            print("Insert DB Error", e)
+
     def readDB(self, table, column):
         '''
         column: str
