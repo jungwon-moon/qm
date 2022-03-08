@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name = 'qm',
-    version = '0.0.2',
+    version = '0.0.3',
     url = 'https://github.com/jungwon-moon/qm.git',
     py_modules = ['scraping', 'backtesting'],
     packages = find_packages(),

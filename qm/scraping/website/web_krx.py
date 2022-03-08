@@ -121,14 +121,20 @@ def ipo(strtDd=ago_6mon, endDd=utils.dt2str(now)):
     return r.json()['output']
 
 
-def stock_index(indIdx, Type, strtDd=ago_1mon, endDd=utils.check_trading_day(now)):
+def stock_index(indIdx, strtDd=ago_1mon, Type=None, endDd=None):
     '''
     indIdx='1' : kospi
     indIdx='2' : kosdaq
     시세 추이
     '''
     if Type == None:
-        strtDd = utils.check_trading_day(now)
+        strtDd = now
+    
+    if endDd == None:
+        endDd = now
+
+    strtDd = utils.check_trading_day(strtDd)
+    endDd = utils.check_trading_day(now)
 
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010103'
     headers['Origin'] = 'http://data.krx.co.kr'

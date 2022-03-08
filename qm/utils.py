@@ -17,7 +17,7 @@ def str2dt(Dd):
     return datetime.datetime.strptime(Dd, "%Y%m%d")
 
 
-def check_trading_day(Dd):
+def check_trading_day(Dd, Type="API"):
     '''
     Return 
     False: non trading day
@@ -25,20 +25,20 @@ def check_trading_day(Dd):
     '''
     Dd = dt2str(Dd)
     diff = datetime.timedelta(days=1)
-    
+
     # 주말 확인
     if datetime.date(int(Dd[:4]), int(Dd[4:6]), int(Dd[6:])).weekday() > 4:
-        return check_trading_day(str2dt(Dd) - diff)    
+        return check_trading_day(str2dt(Dd) - diff, Type)
 
     # 휴장일 확인
-    # else:
-    #     try:
-    #         req_url = 'http://quantmag.net/api/kr/holiday'
-    #         holiday = [row['calnd_dd'] for row in requests.get(req_url).json()]
+    if Type == "API":
+        req_url = 'http://quantmag.net/api/kr/holiday'
+        holiday = [row['calnd_dd'] for row in requests.get(req_url).json()]
+        if Dd in holiday:
+            return check_trading_day(str2dt(Dd) - diff, Type)
+    else:
+        holiday = [k[0] for k in Type.readDB('holiday', 'calnd_dd')]
+        if Dd in holiday:
+            return check_trading_day(str2dt(Dd) - diff, Type)
 
-    #         if Dd in holiday:
-    #             return check_trading_day(str2dt(Dd) - diff)    
-    #     except:
-    #         pass    
-    
     return Dd
