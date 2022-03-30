@@ -33,7 +33,7 @@ def check_trading_day(Dd, Type="API"):
     # 휴장일 확인
     if Type == "API":
         req_url = 'http://quantmag.net/api/kr/holiday'
-        holiday = [row['calnd_dd'] for row in requests.get(req_url).json()]
+        holiday = [row['calnd_dd'] for row in requests.get(req_url).json()['results']]
         if Dd in holiday:
             return check_trading_day(str2dt(Dd) - diff, Type)
     else:
