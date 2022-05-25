@@ -18,9 +18,9 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'}
 
 
-def fundamentalv1_df(Dd=None):
+def valuation_df(Dd=None):
     '''
-    '''  # 펀더멘탈 excel로 스크래핑
+    '''  # valuation excel로 스크래핑
     if Dd == None:
         Dd = utils.dt2str(now)[:8]
         Dd = utils.check_trading_day(Dd)
@@ -50,7 +50,7 @@ def fundamentalv1_df(Dd=None):
     return df
 
 
-def fundamentalv1_json(Dd=None):
+def valuation_json(Dd=None):
     '''
 
     '''

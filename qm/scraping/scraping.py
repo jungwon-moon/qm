@@ -35,8 +35,8 @@ def get_holiday(yy=None):
     return web_krx.holiday_json(yy)
 
 
-def get_fundamentalv1(Dd=None):
-    return web_krx.fundamentalv1_json(Dd)
+def get_valuation(Dd=None):
+    return web_krx.valuation_json(Dd)
     
 
 def get_all_stock_price(Dd=None):
