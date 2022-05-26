@@ -23,7 +23,7 @@ def valuation_df(Dd=None):
     '''  # valuation excel로 스크래핑
     if Dd == None:
         Dd = utils.dt2str(now)[:8]
-        Dd = utils.check_trading_day(Dd)
+        # Dd = utils.check_trading_day(Dd)
 
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201'
     req_url = 'http://data.krx.co.kr/comm/fileDn/GenerateOTP/generate.cmd'
@@ -56,7 +56,7 @@ def valuation_json(Dd=None):
     '''
     if Dd == None:
         Dd = utils.dt2str(now)[:8]
-    Dd = utils.check_trading_day(Dd)
+    # Dd = utils.check_trading_day(Dd)
 
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201'
     req_url = 'http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd'
@@ -133,8 +133,8 @@ def stock_index(indIdx, strtDd=ago_1mon, Type=None, endDd=None):
     if endDd == None:
         endDd = now
 
-    strtDd = utils.check_trading_day(strtDd)
-    endDd = utils.check_trading_day(now)
+    # strtDd = utils.check_trading_day(strtDd)
+    # endDd = utils.check_trading_day(now)
 
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201010103'
     headers['Origin'] = 'http://data.krx.co.kr'
@@ -157,7 +157,7 @@ def stock_index(indIdx, strtDd=ago_1mon, Type=None, endDd=None):
 def all_stock_price(Dd=None):
     if Dd == None:
         Dd = utils.dt2str(now)[:8]
-    Dd = utils.check_trading_day(Dd)
+    # Dd = utils.check_trading_day(Dd)
 
     headers['Origin'] = 'http://data.krx.co.kr'
     headers['Referer'] = 'http://data.krx.co.kr/contents/MDC/MDI/mdiLoader/index.cmd?menuId=MDC0201'
