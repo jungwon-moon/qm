@@ -1,11 +1,10 @@
 from qm import utils
 import warnings
 import requests
+import pandas as pd
+from io import BytesIO
 from dateutil.relativedelta import relativedelta
 from datetime import datetime
-from io import BytesIO
-from bs4 import BeautifulSoup as bs
-import pandas as pd
 
 
 now = datetime.now()

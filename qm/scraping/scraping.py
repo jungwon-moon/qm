@@ -1,4 +1,4 @@
-from qm.scraping.website import web_krx
+from qm.scraping.website import web_krx, web_bigkind
 import pandas as pd
 
 
@@ -41,3 +41,7 @@ def get_valuation(Dd=None):
 
 def get_all_stock_price(Dd=None):
     return web_krx.all_stock_price(Dd)
+
+
+def get_category_keywords():
+    return web_bigkind.category_keywords_json()
